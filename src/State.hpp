@@ -3,30 +3,38 @@
 #include "raylib.h"
 
 #include <memory>
-
-#include "Game.hpp"
+#include <string>
 
 class Game;
 
+enum Modes {
+    NotDefined,
+    Local,
+    Ai,
+    Online
+};
+
+struct TextLine {
+    const char* content;
+    unsigned int y;
+    unsigned int fontSize;
+    Color color;
+};
+
+struct Line {
+    Vector2 start;
+    Vector2 end;
+};
+
+// STATE
 class State {
 public:
-    virtual void handle_inputs(Game& game) = 0;
+    virtual void handleInputs(Game& game) = 0;
     virtual void update(Game& game) = 0;
-    virtual void render() = 0;
+    virtual void render(Game& game) = 0;
+    void drawTextCenteredH(TextLine line, unsigned int windowWidth);
 };
 
-class MenuState : public State {
-public:
-    MenuState();
-    ~MenuState();
-
-    void handle_inputs(Game& game) override;
-    void update(Game& game) override;
-    void render() override;
-};
-
-class MatchState : public State {
-};
-
+// PAUSE STATE
 class PauseState : public State {
 };

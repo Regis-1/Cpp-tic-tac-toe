@@ -8,14 +8,8 @@
 #include <memory>
 
 #include "State.hpp"
-
-class State;
-
-enum Modes {
-    Local,
-    Ai,
-    Online
-};
+#include "MenuState.hpp"
+#include "HumanPlayer.hpp"
 
 class Game {
 public:
@@ -24,11 +18,20 @@ public:
     ~Game();
 
     void run();
-    void set_mode(Modes _mode);
+    void pushState(State* _state);
+    void popState();
+    void setShouldExit(bool _s);
+    unsigned int& getWindowWidth();
+    unsigned int& getWindowHeight();
+    HumanPlayer& getPlayer();
+    std::unique_ptr<Player>&& moveOpponent();
+    void setOpponent(std::unique_ptr<Player>&& _opponent);
 
 private:
+    HumanPlayer player{"Player 1", 'x'};
+    std::unique_ptr<Player> opponent{nullptr};
+    bool shouldExit{false};
     unsigned int windowWidth;
     unsigned int windowHeight;
-    Modes mode;
     std::vector<std::unique_ptr<State>> states;
 };
