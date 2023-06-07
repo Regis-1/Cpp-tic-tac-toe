@@ -12,10 +12,13 @@ Repository uses the CMake as a primary building tool. Procedure to install the g
 ### Windows
 1. Due to the raylib's naming conflicts with some of the Windows functions there is the need to change names of the following function in the raylib's header file:
   1. Open ```raylib.h``` in ```extlibs/raylib/raylib/include```
-  2. Change the name of the ```DrawTextEx```, ```...``` in the header file and then adjust the names in ```src``` directory to be the same
-3. Use CMake cli similar to Linux procedure or use CMake GUI application
-4. Build the game with selected tool e.g. ```ninja``` or ```mingw32-make```
-5. Run ```Cpp-ttt.exe```
+  2. Change the name of the ```DrawTextEx```, ```DrawText```, ```CloseWindow```, ```ShowCursor```, ```Rectangle```, ```LoadImage``` in the header file and then adjust the names in ```src``` directory to be the same
+3. Add the following lines to the main CMakeLists.txt file:
+    ```set(CMAKE_EXE_LINKER_FLAGS " -static")
+    target_link_libraries(${PROJECT_NAME} -static-libgcc -static-libstdc++)```
+4. Use CMake cli similar to Linux procedure or use CMake GUI application
+5. Build the game with selected tool e.g. ```ninja``` or ```mingw32-make```
+6. Run ```Cpp-ttt.exe```
 
 ## Features
 ### Current version: v0.1
